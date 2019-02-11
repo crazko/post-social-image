@@ -49,4 +49,4 @@ See [The Open Graph protocol](http://ogp.me/) and [Twitter Cards](https://develo
 
 ### Preview
 
-Try to add your page to the [https://metatags.io/] to see how would it look like when shared on Facebook, Twitter, Linkedin and others.
+Try to add your page to the https://metatags.io/ to see how would it look like when shared on Facebook, Twitter, Linkedin and others.
