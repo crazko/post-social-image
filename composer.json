@@ -1,0 +1,37 @@
+{
+    "name": "crazko/post-social-image",
+    "description": "Creates images suitable for social networks",
+    "license": "MIT",
+    "bin": [
+        "bin/social-image"
+    ],
+    "authors": [
+        {
+            "name": "Roman Vesely",
+            "email": "info@romanvesely.com"
+        }
+    ],
+    "scripts": {
+        "test": [
+            "@ecs",
+            "@phpstan"
+        ],
+        "ecs": "vendor/bin/ecs check src",
+        "fix": "vendor/bin/ecs check --fix src",
+        "phpstan": "vendor/bin/phpstan analyse -l 7 src --ansi"
+    },
+    "require": {
+        "php": "^7.1",
+        "nette/utils": "^2.5",
+        "symfony/console": "^4.2"
+    },
+    "require-dev": {
+        "phpstan/phpstan": "^0.11.1",
+        "symplify/easy-coding-standard": "^5.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "Crazko\\PostSocialImage\\": "src"
+        }
+    }
+}
