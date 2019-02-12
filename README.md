@@ -12,8 +12,26 @@ composer require crazko/post-social-images
 
 ## Usage
 
+Through CLI:
+
 ```
-vendor/bin/social-image create "My amazing post" ./assets/img -s example.com
+vendor/bin/social-image create -o example.com ./assets/img "My amazing post"
+```
+
+You can also [define a new command](https://getcomposer.org/doc/articles/scripts.md#writing-custom-commands) to your `composer.json` to avoid constantly typing every option:
+
+```json
+{
+    "scripts": {
+        "image": "php ./vendor/bin/social-image create --ansi -b#E6FAFF -f#1E9682 -c#E1738A -o example.com ./assets/img"
+    },
+}
+```
+
+and use it to create new images repeatedly:
+
+```
+composer image "My amazing post"
 ```
 
 ### Available options
