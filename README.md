@@ -22,9 +22,7 @@ vendor/bin/social-image create -o example.com ./assets/img "My amazing post"
 
 Resulting success message:
 
-```
-Image was created in ./assets/img/my-amazing-post.png
-```
+> Image was created in ./assets/img/my-amazing-post.png
 
 You can also [define a new command](https://getcomposer.org/doc/articles/scripts.md#writing-custom-commands) to your `composer.json` to avoid constantly typing every option:
 
