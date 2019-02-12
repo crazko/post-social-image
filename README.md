@@ -1,6 +1,6 @@
 # Post Social Image
 
-A simple command line tool to generates images suitable for social media sites.
+A simple command line tool to generate images suitable for social media sites.
 
 ![Example Image](./docs/post-social-image.png)
 
