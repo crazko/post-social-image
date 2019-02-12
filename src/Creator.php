@@ -23,9 +23,13 @@ class Creator
         $this->image = new Image($configuration);
     }
 
-    public function create(string $title, string $destination): void
+    /**
+     * @return string The path of created image.
+     */
+    public function create(string $title, string $destination): string
     {
         $filename = Strings::webalize($title);
+        $filepath = sprintf('%s/%s.png', $destination, $filename);
         $image = $this->image->getFor(new Text(
             $title,
             $this->configuration->size,
@@ -34,6 +38,8 @@ class Creator
         ));
 
         FileSystem::createDir($destination);
-        $image->save(sprintf('%s/%s.png', $destination, $filename), 7);
+        $image->save($filepath, 7);
+
+        return $filepath;
     }
 }

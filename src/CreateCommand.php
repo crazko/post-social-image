@@ -2,7 +2,6 @@
 
 namespace Crazko\PostSocialImage;
 
-use Nette\Utils\Validators;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -46,8 +45,6 @@ class CreateCommand extends Command
 
         $width = $input->getOption('width');
 
-        Validators::assert($width, 'int');
-
         $configuration = new Configuration([
             'width' => $width,
             'padding' => $input->getOption('padding'),
@@ -62,6 +59,8 @@ class CreateCommand extends Command
         ]);
 
         $imageCreator = new Creator($configuration);
-        $imageCreator->create($title, $destination);
+        $path = $imageCreator->create($title, $destination);
+
+        $output->writeln(sprintf('<info>Image was created in %s</info>', $path));
     }
 }
