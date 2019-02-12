@@ -7,7 +7,7 @@ A simple command line tool to generate images suitable for social media sites.
 ## Installation
 
 ```
-composer install crazko/post-social-images
+composer require crazko/post-social-images
 ```
 
 ## Usage

@@ -1,0 +1,11 @@
+#!/usr/bin/env php
+<?php declare(strict_types=1);
+
+require __DIR__ . '/../vendor/autoload.php';
+
+use Symfony\Component\Console\Application;
+use Crazko\PostSocialImage\CreateCommand;
+
+$application = new Application();
+$application->add(new CreateCommand());
+$application->run();

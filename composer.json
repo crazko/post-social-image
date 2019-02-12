@@ -1,14 +1,20 @@
 {
     "name": "crazko/post-social-image",
     "description": "Creates images suitable for social networks",
-    "license": "MIT",
+    "homepage": "https://github.com/crazko/post-social-image",
+    "support": {
+        "issues": "https://github.com/crazko/post-social-image/issues"
+    },
+    "keywords": ["image", "social", "open graph"],
+    "license": "Unilicense",
     "bin": [
         "bin/social-image"
     ],
     "authors": [
         {
             "name": "Roman Vesely",
-            "email": "info@romanvesely.com"
+            "email": "info@romanvesely.com",
+            "homepage": "https://romanvesely.com"
         }
     ],
     "scripts": {
@@ -18,7 +24,8 @@
         ],
         "ecs": "vendor/bin/ecs check src",
         "fix": "vendor/bin/ecs check --fix src",
-        "phpstan": "vendor/bin/phpstan analyse -l 7 src --ansi"
+        "phpstan": "vendor/bin/phpstan analyse -l 7 src --ansi",
+        "image": "php ./bin/social-image create --ansi -b#E6FAFF -f#1E9682 -o example.com -c#E1738A ./docs"
     },
     "require": {
         "php": "^7.1",
