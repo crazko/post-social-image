@@ -25,7 +25,7 @@
         "ecs": "vendor/bin/ecs check src",
         "fix": "vendor/bin/ecs check --fix src",
         "phpstan": "vendor/bin/phpstan analyse -l 7 src --ansi",
-        "image": "php ./bin/social-image create --ansi -b#E6FAFF -f#1E9682 -c#E1738A -o example.com ./docs"
+        "image": "./bin/social-image create --ansi -b#E6FAFF -f#1E9682 -c#E1738A -o example.com ./docs"
     },
     "require": {
         "php": "^7.1",
