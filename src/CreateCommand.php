@@ -2,6 +2,8 @@
 
 namespace Crazko\PostSocialImage;
 
+use Crazko\PostSocialImage\Configuration;
+use Crazko\PostSocialImage\Creator;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -17,28 +19,24 @@ class CreateCommand extends Command
 
     protected function configure(): void
     {
-        $this
-            ->setDescription('Creates a new social image.')
-            ->setHelp('Creates a new social image with a defined title and optional signature.')
+        $this->setDescription('Creates a new social image.');
+        $this->setHelp('Creates a new social image with a defined title and optional signature.');
+        $this->setDefinition([
+            new InputArgument('destination', InputArgument::REQUIRED, 'Where to save the image?'),
+            new InputArgument('title', InputArgument::REQUIRED, 'Title of the post the image should be generated for.'),
+            new InputOption('width', 'w', InputOption::VALUE_REQUIRED, 'The width of the image in px. Height is calculated proportionaly 16:9.', 1200),
+            new InputOption('padding', 'p', InputOption::VALUE_REQUIRED, 'The padding of the image title in px.', 100),
+            new InputOption('size', 's', InputOption::VALUE_REQUIRED, 'The size of the image title in px.', 100),
 
-            ->addArgument('destination', InputArgument::REQUIRED, 'Where to save the image?')
-            ->addArgument('title', InputArgument::REQUIRED, 'Title of the post the image should be generated for.')
+            new InputOption('colorBackground', 'b', InputOption::VALUE_REQUIRED, 'HEX color of the title.', '#ffffff'),
+            new InputOption('colorForeground', 'f', InputOption::VALUE_REQUIRED, 'HEX color of the image background.', '#000000'),
 
-            ->addOption('width', 'w', InputOption::VALUE_REQUIRED, 'The width of the image in px. Height is calculated proportionaly 16:9.', 1200)
-            ->addOption('padding', 'p', InputOption::VALUE_REQUIRED, 'The padding of the image title in px.', 100)
-            ->addOption('size', 's', InputOption::VALUE_REQUIRED, 'The size of the image title in px.', 100)
-
-            ->addOption('colorBackground', 'b', InputOption::VALUE_REQUIRED, 'HEX color of the title.', '#ffffff')
-            ->addOption('colorForeground', 'f', InputOption::VALUE_REQUIRED, 'HEX color of the image background.', '#000000')
-
-            ->addOption('origin', 'o', InputOption::VALUE_REQUIRED, 'E.g. your name or the name of your blog.', '')
-            ->addOption('colorOrigin', 'c', InputOption::VALUE_REQUIRED, 'HEX color of the origin.', '#000000');
+            new InputOption('origin', 'o', InputOption::VALUE_REQUIRED, 'E.g. your name or the name of your blog.', ''),
+            new InputOption('colorOrigin', 'c', InputOption::VALUE_REQUIRED, 'HEX color of the origin.', '#000000'),
+        ]);
     }
 
-    /**
-     * @return int|null
-     */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): ?int
     {
         $title = $input->getArgument('title');
         $destination = $input->getArgument('destination');
@@ -62,5 +60,7 @@ class CreateCommand extends Command
         $path = $imageCreator->create($title, $destination);
 
         $output->writeln(sprintf('<info>Image was created in %s</info>', $path));
+
+        return 0;
     }
 }
