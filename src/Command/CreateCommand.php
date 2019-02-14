@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace Crazko\PostSocialImage;
+namespace Crazko\PostSocialImage\Command;
 
 use Crazko\PostSocialImage\Configuration;
 use Crazko\PostSocialImage\Creator;

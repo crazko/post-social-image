@@ -1,6 +1,9 @@
 #!/usr/bin/env php
 <?php declare(strict_types=1);
 
+use Crazko\PostSocialImage\Command\CreateCommand;
+use Symfony\Component\Console\Application;
+
 $possibleAutoloadPaths = [
     // local dev repository
     __DIR__ . '/../vendor/autoload.php',
@@ -14,9 +17,6 @@ foreach ($possibleAutoloadPaths as $possibleAutoloadPath) {
        break;
    }
 }
-
-use Symfony\Component\Console\Application;
-use Crazko\PostSocialImage\CreateCommand;
 
 $application = new Application();
 $application->add(new CreateCommand());
