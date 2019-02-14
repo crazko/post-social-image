@@ -2,8 +2,7 @@
 
 namespace Crazko\PostSocialImage\Command;
 
-use Crazko\PostSocialImage\Configuration;
-use Crazko\PostSocialImage\Creator;
+use Crazko\PostSocialImage\ImageCreator;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -31,7 +30,7 @@ class CreateCommand extends Command
             new InputOption('colorBackground', 'b', InputOption::VALUE_REQUIRED, 'HEX color of the title.', '#ffffff'),
             new InputOption('colorForeground', 'f', InputOption::VALUE_REQUIRED, 'HEX color of the image background.', '#000000'),
 
-            new InputOption('origin', 'o', InputOption::VALUE_REQUIRED, 'E.g. your name or the name of your blog.', ''),
+            new InputOption('origin', 'o', InputOption::VALUE_REQUIRED, 'E.g. your name or the name of your blog.', null),
             new InputOption('colorOrigin', 'c', InputOption::VALUE_REQUIRED, 'HEX color of the origin.', '#000000'),
         ]);
     }
@@ -47,20 +46,24 @@ class CreateCommand extends Command
             return 1;
         }
 
-        $configuration = new Configuration([
-            'width' => $input->getOption('width'),
-            'padding' => $input->getOption('padding'),
-            'font' => '/ubuntu.ttf',
-            'size' => $input->getOption('size'),
-            'origin' => $input->getOption('origin'),
-            'originSize' => 25,
-            'background' => $input->getOption('colorBackground'),
-            'foreground' => $input->getOption('colorForeground'),
-            'signature' => $input->getOption('colorOrigin'),
-        ]);
+        $width = $input->getOption('width');
+        // $padding = $input->getOption('padding');
+        $font = '/ubuntu.ttf';
+        $titleSize = $input->getOption('size');
+        $origin = $input->getOption('origin');
+        $originSize = 25;
+        $colorBackground = $input->getOption('colorBackground');
+        $colorTitle = $input->getOption('colorForeground');
+        $colorOrigin = $input->getOption('colorOrigin');
 
-        $imageCreator = new Creator($configuration);
-        $path = $imageCreator->create($title, $destination);
+        $imageCreator = new ImageCreator();
+        $image = $imageCreator->create($width, $colorBackground, $font);
+        $image->setTitle($title, $titleSize, $colorTitle);
+
+        if ($origin) {
+            $image->setSignature($origin, $originSize, $colorOrigin);
+        }
+        $path = $image->saveTo($title, $destination);
 
         $output->writeln(sprintf('<info>Image was created in %s</info>', $path));
 
