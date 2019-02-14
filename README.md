@@ -29,7 +29,7 @@ You can also [define a new command](https://getcomposer.org/doc/articles/scripts
 ```json
 {
     "scripts": {
-        "image": "php ./vendor/bin/social-image create --ansi -b#E6FAFF -f#1E9682 -c#E1738A -o example.com ./assets/img"
+        "image": "vendor/bin/social-image create --ansi -b#E6FAFF -f#1E9682 -c#E1738A -o example.com ./assets/img"
     },
 }
 ```
