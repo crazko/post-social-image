@@ -33,7 +33,6 @@ class Creator
         $image = $this->image->getFor(new Text(
             $title,
             $this->configuration->size,
-            $this->configuration->angle,
             $this->configuration->font
         ));
 

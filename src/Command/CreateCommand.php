@@ -47,7 +47,6 @@ class CreateCommand extends Command
             'width' => $width,
             'padding' => $input->getOption('padding'),
             'font' => '/ubuntu.ttf',
-            'angle' => 0,
             'size' => $input->getOption('size'),
             'origin' => $input->getOption('origin'),
             'originSize' => 25,

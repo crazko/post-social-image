@@ -7,7 +7,6 @@ use Exception;
 /**
  * @property-read int $width
  * @property-read int $size
- * @property-read int $angle
  * @property-read string $font
  * @property-read int $padding
  * @property-read string $origin

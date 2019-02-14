@@ -18,11 +18,11 @@ class Text
      */
     private $dimensions;
 
-    public function __construct(string $text, int $size, int $angle, string $font)
+    public function __construct(string $text, int $size, string $font)
     {
         $this->text = wordwrap($text, 30);
 
-        $box = imagettfbbox($size, $angle, $font, $this->text);
+        $box = imagettfbbox($size, 0, $font, $this->text);
         $minX = min($box[0], $box[2], $box[4], $box[6]);
         $maxX = max($box[0], $box[2], $box[4], $box[6]);
         $minY = min($box[1], $box[3], $box[5], $box[7]);

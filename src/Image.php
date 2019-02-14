@@ -30,9 +30,10 @@ class Image
             $height,
             NetteImage::rgb(...$this->configuration->background)
         );
+
         $image->ttfText(
             $this->configuration->size,
-            $this->configuration->angle,
+            0,
             $x,
             $y,
             NetteImage::rgb(...$this->configuration->foreground),
@@ -45,7 +46,7 @@ class Image
         // Add signature
         $image->ttfText(
             $this->configuration->originSize,
-            $this->configuration->angle,
+            0,
             $image->width - 320,
             $image->height - 50,
             NetteImage::rgb(...$this->configuration->signature),
