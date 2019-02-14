@@ -17,7 +17,7 @@ TBD
 ### Through CLI:
 
 ```
-vendor/bin/social-image create -o example.com ./assets/img "My amazing post"
+vendor/bin/create-image -o example.com ./assets/img "My amazing post"
 ```
 
 Resulting success message:
@@ -29,7 +29,7 @@ You can also [define a new command](https://getcomposer.org/doc/articles/scripts
 ```json
 {
     "scripts": {
-        "image": "vendor/bin/social-image create --ansi -b#E6FAFF -f#1E9682 -c#E1738A -o example.com ./assets/img"
+        "image": "vendor/bin/create-image --ansi -b#E6FAFF -f#1E9682 -c#E1738A -o example.com ./assets/img"
     },
 }
 ```

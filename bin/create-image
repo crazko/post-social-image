@@ -17,7 +17,8 @@ foreach ($possibleAutoloadPaths as $possibleAutoloadPath) {
        break;
    }
 }
-
+$command = new CreateCommand();
 $application = new Application();
-$application->add(new CreateCommand());
+$application->add($command);
+$application->setDefaultCommand($command->getName(), true);
 $application->run();
