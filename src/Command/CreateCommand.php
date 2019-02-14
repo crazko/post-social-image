@@ -41,10 +41,14 @@ class CreateCommand extends Command
         $title = $input->getArgument('title');
         $destination = $input->getArgument('destination');
 
-        $width = $input->getOption('width');
+        if (! is_string($title) || ! is_string($destination)) {
+            $output->writeln('<error>Bad arguments provided</error>');
+
+            return 1;
+        }
 
         $configuration = new Configuration([
-            'width' => $width,
+            'width' => $input->getOption('width'),
             'padding' => $input->getOption('padding'),
             'font' => '/ubuntu.ttf',
             'size' => $input->getOption('size'),
