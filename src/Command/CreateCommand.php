@@ -58,12 +58,13 @@ class CreateCommand extends Command
 
         $imageCreator = new ImageCreator();
         $image = $imageCreator->create($width, $colorBackground, $font);
-        $image->setTitle($title, $titleSize, $colorTitle);
+        $image->text($title, $titleSize, $colorTitle, 'center');
 
         if ($origin) {
-            $image->setSignature($origin, $originSize, $colorOrigin);
+            $image->text($origin, $originSize, $colorOrigin, 'bottomRight');
         }
-        $path = $image->saveTo($title, $destination);
+
+        $path = $image->save($title, $destination);
 
         $output->writeln(sprintf('<info>Image was created in %s</info>', $path));
 

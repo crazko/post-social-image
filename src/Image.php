@@ -31,36 +31,31 @@ class Image
 
     public function __construct(int $width, string $background, string $font)
     {
-        // $this->width = max($width, ($text->width + $this->configuration->padding));
         $this->width = $width;
         $this->height = (int) floor($width / 16 * 9);
+        $this->background = $background;
         $this->fontPath = sprintf('%s/%s', __DIR__, $font);
-        $this->image = NetteImage::fromBlank(
-            $this->width,
-            $this->height,
-            NetteImage::rgb(...$this->hexToRGB($background))
-        );
     }
 
-    public function setTitle(string $text, int $size, string $color): void
+    public function text(string $text, int $size, string $color, string $position): void
     {
-        $box = $this->getTextBox($text, $size, $this->fontPath);
+        // $box = $this->getTextBox($text, $size, $this->fontPath);
 
-        // ako vlastny argument - center, right, left bottom ...
-        $x = ($this->width / 2) - ($box['width'] / 2);
-        $y = ($this->height / 2) - ($box['height'] / 2) + $size;
+        // var_dump($box);
 
-        $this->image->ttfText(
-            $size,
-            0,
-            $x,
-            $y,
-            NetteImage::rgb(...$this->hexToRGB($color)),
-            $this->fontPath,
-            $text
-        );
+        // // ako vlastny argument - center, right, left bottom ...
+        // $x = ($this->width / 2) - ($box['width'] / 2);
+        // $y = ($this->height / 2) - ($box['height'] / 2) + $size;
 
-        // $image->resize($this->configuration->width, null);
+        // $this->image->ttfText(
+        //     $size,
+        //     0,
+        //     $x,
+        //     $y,
+        //     NetteImage::rgb(...$this->hexToRGB($color)),
+        //     $this->fontPath,
+        //     $text
+        // );
     }
 
     public function setSignature(string $text, int $size, string $color): void
@@ -80,15 +75,42 @@ class Image
     /**
      * @return string The path of created image.
      */
-    public function saveTo(string $name, string $destination): string
+    public function save(string $name, string $destination): string
     {
         $filename = Strings::webalize($name);
         $filepath = sprintf('%s/%s.png', $destination, $filename);
 
         FileSystem::createDir($destination);
-        $this->image->save($filepath, 7);
+
+        $image = $this->get();
+        $image->save($filepath, 7);
 
         return $filepath;
+    }
+
+    public function get()
+    {
+        if (! $this->image) {
+            $this->image = $this->create;
+        }
+
+        return $this->image;
+    }
+
+    private function create(): NetteImage
+    {
+
+        // prejst vsetky texty a upravit
+
+        $image = NetteImage::fromBlank(
+            $this->width,
+            $this->height,
+            NetteImage::rgb(...$this->hexToRGB($background))
+        );
+
+        $image->resize($this->width, null);
+
+        return $image;
     }
 
     /**
