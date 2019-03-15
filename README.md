@@ -2,7 +2,7 @@
 
 ![Example Image](./docs/post-social-image.png)
 
-A simple command line tool to generate images suitable for social media sites.
+A simple command line tool to generate images suitable for sharing on social media sites.
 
 ## Installation
 
