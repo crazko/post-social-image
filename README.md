@@ -4,6 +4,8 @@
 
 A simple command line tool to generate images suitable for sharing on social media sites.
 
+![Travis (.org)](https://img.shields.io/travis/crazko/post-social-image.svg)
+
 ## Installation
 
 ```
