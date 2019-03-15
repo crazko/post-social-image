@@ -28,11 +28,11 @@ class CreateCommand extends Command
             new InputOption('padding', 'p', InputOption::VALUE_REQUIRED, 'The padding of the image in px.', 50),
             new InputOption('size', 's', InputOption::VALUE_REQUIRED, 'The size of the image title in px.', 100),
 
-            new InputOption('colorBackground', 'b', InputOption::VALUE_REQUIRED, 'HEX color of the title.', '#ffffff'),
-            new InputOption('colorForeground', 'f', InputOption::VALUE_REQUIRED, 'HEX color of the image background.', '#000000'),
+            new InputOption('colorBackground', 'b', InputOption::VALUE_REQUIRED, 'HEX color of the title.', 'ffffff'),
+            new InputOption('colorForeground', 'f', InputOption::VALUE_REQUIRED, 'HEX color of the image background.', '000000'),
 
             new InputOption('origin', 'o', InputOption::VALUE_REQUIRED, 'E.g. your name or the name of your blog.', null),
-            new InputOption('colorOrigin', 'c', InputOption::VALUE_REQUIRED, 'HEX color of the origin.', '#000000'),
+            new InputOption('colorOrigin', 'c', InputOption::VALUE_REQUIRED, 'HEX color of the origin.', '000000'),
         ]);
     }
 
