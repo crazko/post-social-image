@@ -20,11 +20,13 @@
     "scripts": {
         "test": [
             "@ecs",
-            "@phpstan"
+            "@phpstan",
+            "@tester"
         ],
-        "ecs": "vendor/bin/ecs check src",
+        "ecs": "vendor/bin/ecs check --ansi src",
         "fix": "vendor/bin/ecs check --fix src",
-        "phpstan": "vendor/bin/phpstan analyse -l 7 src --ansi",
+        "phpstan": "vendor/bin/phpstan analyse -l 7 --ansi src",
+        "tester": "vendor/bin/tester tests",
         "image": "bin/create-image --ansi -b E6FAFF -f 1E9682 -c E1738A -o example.com ./docs"
     },
     "require": {
@@ -34,7 +36,8 @@
     },
     "require-dev": {
         "phpstan/phpstan": "^0.11.1",
-        "symplify/easy-coding-standard": "^5.4"
+        "symplify/easy-coding-standard": "^5.4",
+        "nette/tester": "^2.2"
     },
     "autoload": {
         "psr-4": {

@@ -49,7 +49,7 @@ class CreateCommand extends Command
 
         $width = $input->getOption('width');
         $padding = $input->getOption('padding');
-        $font = '/ubuntu.ttf';
+        $font = __DIR__ . '/../ubuntu.ttf';
         $titleSize = $input->getOption('size');
         $origin = $input->getOption('origin');
         $originSize = 25;

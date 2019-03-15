@@ -45,12 +45,12 @@ class Image
      */
     private $padding;
 
-    public function __construct(int $width, string $background, string $font, int $padding)
+    public function __construct(int $width, string $background, string $fontPath, int $padding)
     {
         $this->width = $width;
         $this->height = $this->heightFromWidth($width);
         $this->background = $background;
-        $this->fontPath = sprintf('%s/%s', __DIR__, $font);
+        $this->fontPath = $fontPath;
         $this->padding = $padding;
     }
 
@@ -96,6 +96,10 @@ class Image
 
     private function create(): NetteImage
     {
+        if (count($this->texts) === 0) {
+            throw new \InvalidArgumentException('Add at least one text with Image::text()');
+        }
+
         // First text is a "title"
         /** @var Text $title */
         $title = array_shift($this->texts);

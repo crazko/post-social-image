@@ -40,7 +40,7 @@ Creates new `Image` instance.
 
 - `$width` - width of the image in px, height is calculated proportionaly 16:9
 - `$background` - HEX color of the image background, e.g.: `ff8800` or `#ff8800`
-- `$font` - path to the font used in the image
+- `$fontPath` - path to the font used in the image
 - `$padding` - free space around the image in px
 
 #### `Image::text(string $text, int $size, string $color, ?int $position = null)`
