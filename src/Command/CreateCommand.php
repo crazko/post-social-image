@@ -2,7 +2,8 @@
 
 namespace Crazko\PostSocialImage\Command;
 
-use Crazko\PostSocialImage\ImageCreator;
+use Crazko\PostSocialImage\Image;
+use Crazko\PostSocialImage\Position;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -24,7 +25,7 @@ class CreateCommand extends Command
             new InputArgument('destination', InputArgument::REQUIRED, 'Where to save the image?'),
             new InputArgument('title', InputArgument::REQUIRED, 'Title of the post the image should be generated for.'),
             new InputOption('width', 'w', InputOption::VALUE_REQUIRED, 'The width of the image in px. Height is calculated proportionaly 16:9.', 1200),
-            new InputOption('padding', 'p', InputOption::VALUE_REQUIRED, 'The padding of the image title in px.', 100),
+            new InputOption('padding', 'p', InputOption::VALUE_REQUIRED, 'The padding of the image in px.', 50),
             new InputOption('size', 's', InputOption::VALUE_REQUIRED, 'The size of the image title in px.', 100),
 
             new InputOption('colorBackground', 'b', InputOption::VALUE_REQUIRED, 'HEX color of the title.', '#ffffff'),
@@ -47,7 +48,7 @@ class CreateCommand extends Command
         }
 
         $width = $input->getOption('width');
-        // $padding = $input->getOption('padding');
+        $padding = $input->getOption('padding');
         $font = '/ubuntu.ttf';
         $titleSize = $input->getOption('size');
         $origin = $input->getOption('origin');
@@ -56,12 +57,11 @@ class CreateCommand extends Command
         $colorTitle = $input->getOption('colorForeground');
         $colorOrigin = $input->getOption('colorOrigin');
 
-        $imageCreator = new ImageCreator();
-        $image = $imageCreator->create($width, $colorBackground, $font);
-        $image->text($title, $titleSize, $colorTitle, 'center');
+        $image = new Image($width, $colorBackground, $font, $padding);
+        $image->text($title, $titleSize, $colorTitle);
 
         if ($origin) {
-            $image->text($origin, $originSize, $colorOrigin, 'bottomRight');
+            $image->text($origin, $originSize, $colorOrigin, Position::BOTTOM | Position::RIGHT);
         }
 
         $path = $image->save($title, $destination);

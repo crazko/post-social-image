@@ -29,12 +29,12 @@ You can also [define a new command](https://getcomposer.org/doc/articles/scripts
 ```json
 {
     "scripts": {
-        "image": "vendor/bin/create-image --ansi -b#E6FAFF -f#1E9682 -c#E1738A -o example.com ./assets/img"
+        "image": "vendor/bin/create-image --ansi -b E6FAFF -f 1E9682 -c E1738A -o example.com ./assets/img"
     },
 }
 ```
 
-and use it to create new images repeatedly:
+and use it to create new images more easily:
 
 ```
 composer image "My amazing post"

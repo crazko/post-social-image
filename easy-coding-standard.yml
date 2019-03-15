@@ -4,3 +4,7 @@ imports:
     - { resource: 'vendor/symplify/easy-coding-standard/config/php70.yml' }
     - { resource: 'vendor/symplify/easy-coding-standard/config/php71.yml' }
     - { resource: 'vendor/symplify/easy-coding-standard/config/psr2.yml' }
+
+parameters:
+    skip:
+        SlevomatCodingStandard\Sniffs\Classes\UnusedPrivateElementsSniff.WriteOnlyProperty: ~

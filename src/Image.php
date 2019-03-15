@@ -2,13 +2,14 @@
 
 namespace Crazko\PostSocialImage;
 
-use Exception;
 use Nette\Utils\FileSystem;
 use Nette\Utils\Image as NetteImage;
 use Nette\Utils\Strings;
 
 class Image
 {
+    const WORD_WRAP = 20;
+
     /**
      * @var int
      */
@@ -22,54 +23,40 @@ class Image
     /**
      * @var string
      */
+    private $background;
+
+    /**
+     * @var string
+     */
     private $fontPath;
+
+    /**
+     * @var Text[]
+     */
+    private $texts = [];
 
     /**
      * @var NetteImage
      */
     private $image;
 
-    public function __construct(int $width, string $background, string $font)
+    /**
+     * @var int
+     */
+    private $padding;
+
+    public function __construct(int $width, string $background, string $font, int $padding)
     {
         $this->width = $width;
-        $this->height = (int) floor($width / 16 * 9);
+        $this->height = $this->heightFromWidth($width);
         $this->background = $background;
         $this->fontPath = sprintf('%s/%s', __DIR__, $font);
+        $this->padding = $padding;
     }
 
-    public function text(string $text, int $size, string $color, string $position): void
+    public function text(string $text, int $size, string $color, ?int $position = null): void
     {
-        // $box = $this->getTextBox($text, $size, $this->fontPath);
-
-        // var_dump($box);
-
-        // // ako vlastny argument - center, right, left bottom ...
-        // $x = ($this->width / 2) - ($box['width'] / 2);
-        // $y = ($this->height / 2) - ($box['height'] / 2) + $size;
-
-        // $this->image->ttfText(
-        //     $size,
-        //     0,
-        //     $x,
-        //     $y,
-        //     NetteImage::rgb(...$this->hexToRGB($color)),
-        //     $this->fontPath,
-        //     $text
-        // );
-    }
-
-    public function setSignature(string $text, int $size, string $color): void
-    {
-        // // Add signature
-        // $image->ttfText(
-        //     $this->configuration->originSize,
-        //     0,
-        //     $image->width - 320,
-        //     $image->height - 50,
-        //     NetteImage::rgb(...$this->configuration->signature),
-        //     $this->configuration->font,
-        //     $this->configuration->origin
-        // );
+        $this->texts[] = new Text($text, $size, $color, $position);
     }
 
     /**
@@ -88,27 +75,91 @@ class Image
         return $filepath;
     }
 
-    public function get()
+    public function get(): NetteImage
     {
-        if (! $this->image) {
-            $this->image = $this->create;
+        if ($this->image === null) {
+            $this->image = $this->create();
         }
 
         return $this->image;
     }
 
+    private function heightFromWidth(int $width): int
+    {
+        return (int) floor($width / 16 * 9);
+    }
+
+    private function widthFromHeight(int $height): int
+    {
+        return (int) floor($height / 9 * 16);
+    }
+
     private function create(): NetteImage
     {
+        // First text is a "title"
+        /** @var Text $title */
+        $title = array_shift($this->texts);
+        $wrappedTitle = wordwrap($title->text, self::WORD_WRAP);
+        $boxTitle = new Box($wrappedTitle, $title->size, $this->fontPath);
 
-        // prejst vsetky texty a upravit
+        $possibleWidth = max($this->width, ($boxTitle->width + 2 * $this->padding));
+        $possibleHeight = $this->heightFromWidth($possibleWidth);
+
+        $initialHeight = max($possibleHeight, ($boxTitle->height + 2 * $this->padding));
+        $initialWidth = $initialHeight > $possibleHeight ? $this->widthFromHeight($initialHeight) : $possibleWidth;
+
+        $titleX = (int) ($initialWidth / 2) - ($boxTitle->width / 2);
+        $titleY = (int) ($initialHeight / 2) - ($boxTitle->height / 2) + $title->size;
 
         $image = NetteImage::fromBlank(
-            $this->width,
-            $this->height,
-            NetteImage::rgb(...$this->hexToRGB($background))
+            $initialWidth,
+            $initialHeight,
+            NetteImage::rgb(...$this->hexToRGB($this->background))
+        );
+
+        $image->ttfText(
+            $title->size,
+            0,
+            $titleX,
+            $titleY,
+            NetteImage::rgb(...$this->hexToRGB($title->color)),
+            $this->fontPath,
+            $wrappedTitle
         );
 
         $image->resize($this->width, null);
+
+        foreach ($this->texts as $text) {
+            $boxText = new Box($text->text, $text->size, $this->fontPath);
+            $x = 0;
+            $y = 0;
+
+            if ($text->position & Position::TOP) {
+                $y = $this->padding + $text->size;
+            }
+
+            if ($text->position & Position::BOTTOM) {
+                $y = $this->height - $boxText->height - $this->padding + $text->size;
+            }
+
+            if ($text->position & Position::LEFT) {
+                $x = $this->padding;
+            }
+
+            if ($text->position & Position::RIGHT) {
+                $x = $this->width - $boxText->width - $this->padding;
+            }
+
+            $image->ttfText(
+                $text->size,
+                0,
+                $x,
+                $y,
+                NetteImage::rgb(...$this->hexToRGB($text->color)),
+                $this->fontPath,
+                $text->text
+            );
+        }
 
         return $image;
     }
@@ -121,32 +172,13 @@ class Image
         preg_match('/^#?([a-fA-F\d]{2})([a-fA-F\d]{2})([a-fA-F\d]{2})$/', $hex, $parts);
 
         if (! $parts) {
-            throw new Exception('bad color provided' . $hex);
+            throw new \InvalidArgumentException('Provided color is not in HEX format: ' . $hex);
         }
 
         return [
             (int) hexdec($parts[1]),
             (int) hexdec($parts[2]),
             (int) hexdec($parts[3]),
-        ];
-    }
-
-    /**
-     * @return int[]
-     */
-    private function getTextBox(string $text, int $size, string $font): array
-    {
-        $wrappedText = wordwrap($text, 30);
-
-        $box = imagettfbbox($size, 0, $font, $wrappedText);
-        $minX = min($box[0], $box[2], $box[4], $box[6]);
-        $maxX = max($box[0], $box[2], $box[4], $box[6]);
-        $minY = min($box[1], $box[3], $box[5], $box[7]);
-        $maxY = max($box[1], $box[3], $box[5], $box[7]);
-
-        return [
-            'width' => (int) ($maxX - $minX),
-            'height' => (int) ($maxY - $minY),
         ];
     }
 }
