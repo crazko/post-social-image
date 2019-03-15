@@ -1,0 +1,5 @@
+parameters:
+    ignoreErrors:
+        -
+            message: '#Parameter .* of class|method Crazko\\PostSocialImage\\Image.* given#'
+            path: %currentWorkingDirectory%/src/Command/CreateCommand.php
