@@ -12,7 +12,25 @@ composer require crazko/post-social-images
 
 ## Usage
 
-TBD
+```php
+<?php
+
+use Crazko\PostSocialImage\Image;
+use Crazko\PostSocialImage\Position;
+
+$title = 'My amazing post';
+
+$image = new Image(1600, '#1E9682', '/ubuntu.ttf', 80);
+$image->text($title, 120, '#E6FAFF'); // First text is always wrapped and centered
+$image->text('example.com', 25, '#33F88A', Position::BOTTOM | Position::RIGHT);
+
+// More texts can be placed into image
+$image->text('John Doe', 50, '#660012', Position::TOP | Position::LEFT);
+
+$path = $image->save($title, './assests/img'); // ./assets/img/my-amazing-post.png
+```
+
+![Example Image](./docs/my-amazing-post.png)
 
 ### Through CLI:
 
@@ -42,7 +60,7 @@ composer image "My amazing post"
 
 ### Available options
 
-TBD
+Type `bin/create-image --help` to see all available options.
 
 ## How to add image to the site
 
