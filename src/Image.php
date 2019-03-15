@@ -8,7 +8,7 @@ use Nette\Utils\Strings;
 
 class Image
 {
-    const WORD_WRAP = 20;
+    const LETTERS_TO_WRAP = 20;
 
     /**
      * @var int
@@ -99,7 +99,7 @@ class Image
         // First text is a "title"
         /** @var Text $title */
         $title = array_shift($this->texts);
-        $wrappedTitle = wordwrap($title->text, self::WORD_WRAP);
+        $wrappedTitle = wordwrap($title->text, self::LETTERS_TO_WRAP);
         $boxTitle = new Box($wrappedTitle, $title->size, $this->fontPath);
 
         $possibleWidth = max($this->width, ($boxTitle->width + 2 * $this->padding));
