@@ -7,8 +7,8 @@ require __DIR__ . '/../vendor/autoload.php';
 
 $box = new Box('My amazing post', 50, __DIR__ . '/../src/ubuntu.ttf');
 
-Assert::same(500, $box->width);
-Assert::same(62, $box->height);
+Assert::type('integer', $box->width);
+Assert::type('integer', $box->height);
 
 Assert::exception(function () use ($box): void {
     $box->foo;
