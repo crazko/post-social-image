@@ -90,7 +90,7 @@ composer image "My amazing post"
 
 #### Available options
 
-Type `bin/create-image --help` to see all available options.
+Type `vendor/bin/create-image --help` to see all available options.
 
 ```
 Description:
