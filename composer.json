@@ -6,7 +6,7 @@
         "issues": "https://github.com/crazko/post-social-image/issues"
     },
     "keywords": ["image", "social", "open graph"],
-    "license": "Unilicense",
+    "license": "MIT",
     "bin": [
         "bin/create-image"
     ],
