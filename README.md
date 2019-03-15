@@ -60,7 +60,7 @@ Saves generated image to the `$destination` with given ([webalized](https://doc.
 
 Returns generated image.
 
-### Through CLI:
+### CLI
 
 ```
 vendor/bin/create-image -o example.com ./assets/img "My amazing post"
