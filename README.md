@@ -125,7 +125,30 @@ Help:
   Creates a new social image with a defined title and optional signature.
 ```
 
-## How to add image to the site
+## Development
+
+Fork and clone the repository, install dependencies.
+
+```
+git clone git@github.com:<your-name>/post-social-images.git
+cd post-social-images
+composer install
+```
+
+Testing commands:
+
+- `composer ecs` - checks coding standards with [EasyCodingStandard](https://github.com/Symplify/EasyCodingStandard) library
+- `composer phpstan` - runs static analysis with [phpstan](https://github.com/phpstan/phpstan)
+- `composer tester` - runs tests from `./tests` with [nette/tester](https://tester.nette.org/)
+
+<!-- separator -->
+
+- `composer test` - runs all above together
+- `composer fix` - fixes coding standard violations automatically
+
+## Tips
+
+### How to add image to the site
 
 Add following meta tags to the `<head>` element of your page:
 
@@ -152,6 +175,6 @@ All recommended tags:
 
 See [The Open Graph protocol](http://ogp.me/) and [Twitter Cards](https://developer.twitter.com/en/docs/tweets/optimize-with-cards/overview/abouts-cards) for more info about other meta tags.
 
-### Preview
+#### Preview
 
 Try to add your page to the https://metatags.io/ to see how would it look like with your amazing new social image when shared on Facebook, Twitter, Linkedin and others.
